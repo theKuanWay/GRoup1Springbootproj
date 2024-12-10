@@ -7,8 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "hdb_user")
+public class HDBUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
