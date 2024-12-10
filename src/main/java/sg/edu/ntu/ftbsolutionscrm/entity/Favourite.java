@@ -23,9 +23,8 @@ public class Favourite {
     @Column(nullable = false)
     private Long itemId;
 
-    @ManyToMany(mappedBy = "favourites", fetch = FetchType.LAZY)
-    private Set<User> users;
-
+    // @ManyToMany(mappedBy = "favourites", fetch = FetchType.LAZY)
+    // private Set<User> users;
 
     public Favourite() {
     }
@@ -46,15 +45,12 @@ public class Favourite {
         this.itemId = itemId;
     }
 
-    public Set<User> getUsers() {
-        return this.users;
-    }
+    // public Set<User> getUsers() {
+    // return this.users;
+    // }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+    // public void setUsers(Set<User> users) {
+    // this.users = users;
+    // }
 
-
-
-    
 }
