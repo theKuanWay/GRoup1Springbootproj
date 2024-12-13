@@ -11,7 +11,7 @@ import sg.edu.ntu.ftbsolutionscrm.entity.Favourite;
 import sg.edu.ntu.ftbsolutionscrm.entity.HDBUser;
 import sg.edu.ntu.ftbsolutionscrm.entity.ResaleHdb;
 import sg.edu.ntu.ftbsolutionscrm.repository.FavouriteRepository;
-import sg.edu.ntu.ftbsolutionscrm.repository.HdbUserRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.HDBUserRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.ResaleHDBRepository;
 
 @Service
@@ -21,7 +21,7 @@ public class FavouriteService {
     private ResaleHDBRepository resaleHDBRepository;
 
     @Autowired
-    private HdbUserRepository hdbUserRepository;
+    private HDBUserRepository hdbUserRepository;
 
     @Autowired
     private FavouriteRepository favouriteRepository;

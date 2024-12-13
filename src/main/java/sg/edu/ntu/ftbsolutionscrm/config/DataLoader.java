@@ -11,20 +11,38 @@ import jakarta.annotation.PostConstruct;
 import sg.edu.ntu.ftbsolutionscrm.entity.Favourite;
 import sg.edu.ntu.ftbsolutionscrm.entity.HDBUser;
 import sg.edu.ntu.ftbsolutionscrm.entity.ResaleHdb;
+import sg.edu.ntu.ftbsolutionscrm.entity.Salesperson;
 import sg.edu.ntu.ftbsolutionscrm.repository.FavouriteRepository;
-import sg.edu.ntu.ftbsolutionscrm.repository.HdbUserRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.HDBUserRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.ResaleHDBRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.SalespersonRepository;
 
 @Component
 public class DataLoader {
         @Autowired
         private ResaleHDBRepository resaleHdbRepository;
 
+
         @Autowired
         private FavouriteRepository favouriteRepository;
 
+    @Autowired
+    private SalespersonRepository salespersonRepository;
+
+   
+
+    public void loadSalesPerson()
+    {
+        salespersonRepository.save(Salesperson.builder().firstName("Tony").lastName("Stark").email("tony@gmail.com")
+        .contactNo("12345678").awards("Inspiring Innovator 2023").yearsInService(5).build());
+        
+        salespersonRepository.save(Salesperson.builder().firstName("Ahmad").lastName("Jeffri").email("Ajeffri90@gmail.com")
+        .contactNo("97867523").awards("").yearsInService(2).build());
+    }
+
+
         @Autowired
-        private HdbUserRepository hdbUserRepository;
+        private HDBUserRepository hdbUserRepository;
 
         @PostConstruct
         public void loadData() {
@@ -32,9 +50,14 @@ public class DataLoader {
                 resaleHdbRepository.deleteAll();
                 favouriteRepository.deleteAll();
                 hdbUserRepository.deleteAll();
+                resaleHdbRepository.deleteAll();
+                salespersonRepository.deleteAll();
+
                 loadResaleHdb();
                 loadFavourite();
                 loadHDBUser();
+                loadSalesPerson();
+
         }
 
         public void loadFavourite() {
@@ -57,16 +80,35 @@ public class DataLoader {
                 }
         }
 
-        public void loadHDBUser() {
-                List<HDBUser> users = List.of(
-                                new HDBUser("John", "Tan","john-tan@email.com", true),
-                                new HDBUser("Tom","Tanny", "Tom-tanny@email.com",true)
+        // public void loadHDBUser() {
+        //         List<HDBUser> users = List.of(
+        //                         new HDBUser("John", "Tan","john-tan@email.com", true),
+        //                         new HDBUser("Tom","Tanny", "Tom-tanny@email.com",true)
 
-                );
+        //         );
 
-                hdbUserRepository.saveAll(users);
+        //         hdbUserRepository.saveAll(users);
 
-        }
+        // }
+
+
+        public void loadHDBUser() 
+    {
+        hdbUserRepository.save(HDBUser.builder().
+        firstName("Ramdan").
+        lastName("Maskov").
+        email("MaskozRamdan@gmail.com").
+        isMarriedBoolean(true).
+        contactNo("98765432").
+        yearofbirth(2017).
+        closetoschool(true).
+        closetomall(false).
+        closetotransportation(true).
+        closetoroadways(false).
+        build());
+
+    }
+
 
         public void loadResaleHdb() {
                 List<ResaleHdb> properties = List.of(
@@ -203,4 +245,8 @@ public class DataLoader {
                 }
         }
 
-}
+
+    }
+
+
+
