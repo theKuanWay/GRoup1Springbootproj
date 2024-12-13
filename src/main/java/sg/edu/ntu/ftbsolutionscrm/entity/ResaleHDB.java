@@ -13,19 +13,22 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "resale_hdb")
-public class ResaleHDB {
+public class ResaleHdb {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer month;
+    @Column(name = "month")
+    private String month;
 
+    @Column(name = "town")
     private String town;
 
     @Column(name = "flat_type")
     private String flatType;
 
+    @Column(name = "block")
     private String block;
 
     @Column(name = "street_name")
@@ -48,4 +51,24 @@ public class ResaleHDB {
 
     @Column(name = "resale_price")
     private Integer resalePrice;
+
+    public ResaleHdb() {
+
+    }
+
+    public ResaleHdb(String month, String town, String flatType, String block, String streetName, String storeyRange,
+            Double floorAreaSqm, String flatModel, Integer leaseCommenceDate, String remainingLease,
+            Integer resalePrice) {
+        this.month = month;
+        this.town = town;
+        this.flatType = flatType;
+        this.block = block;
+        this.streetName = streetName;
+        this.storeyRange = storeyRange;
+        this.floorAreaSqm = floorAreaSqm;
+        this.flatModel = flatModel;
+        this.leaseCommenceDate = leaseCommenceDate;
+        this.remainingLease = remainingLease;
+        this.resalePrice = resalePrice;
+    }
 }
