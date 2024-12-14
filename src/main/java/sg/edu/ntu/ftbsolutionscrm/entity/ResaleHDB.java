@@ -1,10 +1,14 @@
 package sg.edu.ntu.ftbsolutionscrm.entity;
 
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +22,9 @@ public class ResaleHdb {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "flat" , cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Favourite> favourites;
 
     @Column(name = "month")
     private String month;
