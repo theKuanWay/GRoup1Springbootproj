@@ -1,16 +1,20 @@
 package sg.edu.ntu.ftbsolutionscrm.entity;
 
-import java.util.Set;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "favourite", schema = "public")
 public class Favourite {
@@ -20,11 +24,15 @@ public class Favourite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long itemId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private HDBUser user;
 
-    // @ManyToMany(mappedBy = "favourites", fetch = FetchType.LAZY)
-    // private Set<User> users;
+    @ManyToOne
+    @JoinColumn(name = "flat_id", nullable = false)
+    private ResaleHdb flat;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Favourite() {
     }
@@ -36,21 +44,28 @@ public class Favourite {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Long getItemId() {
-        return this.itemId;
+    public ResaleHdb getFlat (){
+        return flat;
     }
 
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
+    public void setFlat(ResaleHdb flat) {
+        this.flat = flat;
     }
 
-    // public Set<User> getUsers() {
-    // return this.users;
-    // }
+    public HDBUser getUser() {
+        return user;
+    }
 
-    // public void setUsers(Set<User> users) {
-    // this.users = users;
-    // }
+    public void setUser(HDBUser user) {
+        this.user = user;
+    }
+
+public LocalDateTime getCreatedAt(){
+    return createdAt;
+}
+
+    public void setCreatedAt(LocalDateTime createdAt){
+        this.createdAt = createdAt;
+    }
 
 }
