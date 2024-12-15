@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import sg.edu.ntu.ftbsolutionscrm.entity.HDBUser;
-import sg.edu.ntu.ftbsolutionscrm.repository.HDBUserRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.HdbUserRepository;
 import sg.edu.ntu.ftbsolutionscrm.exception.HDBUserNotFoundException;
 
 
@@ -14,9 +14,9 @@ import sg.edu.ntu.ftbsolutionscrm.exception.HDBUserNotFoundException;
 @Service
 public class HDBUserServiceImpl implements HDBUserService {
 
-  private HDBUserRepository hdbUserRepository;
+  private HdbUserRepository hdbUserRepository;
 
-  public HDBUserServiceImpl(HDBUserRepository hdbUserRepository) {
+  public HDBUserServiceImpl(HdbUserRepository hdbUserRepository) {
     this.hdbUserRepository = hdbUserRepository;
   }
 

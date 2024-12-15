@@ -2,6 +2,9 @@ package sg.edu.ntu.ftbsolutionscrm.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,11 +30,19 @@ public class Favourite {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private HDBUser user;
 
     @ManyToOne
     @JoinColumn(name = "flat_id", nullable = false)
+    @JsonIgnore
     private ResaleHdb flat;
+
+      @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Transient
+    public ResaleHdb getFlatDetails() {
+        return this.flat;
+    }
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

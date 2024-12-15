@@ -59,8 +59,8 @@ public class DataLoader {
 
         public void loadHDBUser() {
                 List<HDBUser> users = List.of(
-                                new HDBUser("John"),
-                                new HDBUser("Tom")
+                                new HDBUser("John", "Tan","john-tan@email.com", true),
+                                new HDBUser("Tom","Tanny", "Tom-tanny@email.com",true)
 
                 );
 

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import sg.edu.ntu.ftbsolutionscrm.dto.FavouriteDTO;
 import sg.edu.ntu.ftbsolutionscrm.entity.Favourite;
 import sg.edu.ntu.ftbsolutionscrm.service.FavouriteService;
 
@@ -32,17 +33,25 @@ public class FavouriteController {
         return new ResponseEntity<>("Favourite added successfully!", HttpStatus.CREATED); // HTTP 201
     }
     
-        // Get all favourites for a user
-    @GetMapping("/{userId}")
-    public ResponseEntity< List<Favourite>> getFavouritesByUser(@PathVariable Long userId) {
-        return new ResponseEntity<>(favouriteService.getFavouritesByUser(userId), HttpStatus.OK);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<FavouriteDTO>> getAllFavourites(@PathVariable Long userId) {
+        try {
+            List<FavouriteDTO> favourites = favouriteService.getAllFavouritesForUser(userId);
+            return ResponseEntity.ok(favourites);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
+        
 
-        // Delete a favourite by its ID
     @DeleteMapping("/{favouriteId}")
-    public ResponseEntity<HttpStatus> deleteFavourite(@PathVariable Long favouriteId) {
-        favouriteService.deleteFavourite(favouriteId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteFavourite(@PathVariable Long favouriteId) {
+        try {
+            favouriteService.deleteFavourite(favouriteId);
+            return ResponseEntity.ok("Favourite deleted successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-    
 }
+
