@@ -1,16 +1,22 @@
 package sg.edu.ntu.ftbsolutionscrm.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 @Entity
 @Table(name = "hdb_user")
 public class HDBUser {
@@ -113,5 +119,15 @@ public class HDBUser {
         this.close_to_roadways = close_to_roadways;
     }
 
+
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Favourite> favourites;
+
+    public HDBUser(String name){
+        this.name = name;
+    }
 
 }
