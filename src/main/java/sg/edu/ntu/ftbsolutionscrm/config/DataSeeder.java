@@ -13,10 +13,11 @@ import sg.edu.ntu.ftbsolutionscrm.repository.FacebookLoginRepository;
 @Configuration
 public class DataSeeder {
 
-    @Value("${facebook.mock-uuid}")
+    @Value("${facebook.mock-uuid}") //get value from app.properties
     private String facebookMockUuid;
 
     @Bean
+    //Make sure it runs after app start
     CommandLineRunner initDataBase(LoginRepository loginRepository, FacebookLoginRepository facebookLoginRepository) {
         return args -> {
             // Seed admin user
