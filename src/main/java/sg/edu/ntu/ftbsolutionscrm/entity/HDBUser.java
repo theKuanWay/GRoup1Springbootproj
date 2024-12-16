@@ -2,6 +2,8 @@ package sg.edu.ntu.ftbsolutionscrm.entity;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,18 +55,18 @@ public class HDBUser {
     private Boolean close_to_roadways;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({ "user", "flat" })
     private Set<Favourite> favourites;
 
-    public HDBUser(){
+    public HDBUser() {
 
     }
 
-    public HDBUser(String firstname, String lastName, String email, Boolean isMarriedBoolean){
+    public HDBUser(String firstname, String lastName, String email, Boolean isMarriedBoolean) {
         this.firstName = firstname;
         this.lastName = lastName;
         this.email = email;
     }
-
 
     public Long getId() {
         return id;
@@ -153,6 +155,7 @@ public class HDBUser {
     public void setClose_to_roadways(Boolean close_to_roadways) {
         this.close_to_roadways = close_to_roadways;
     }
+
     public HDBUser(String firstName) {
         this.firstName = firstName;
     }

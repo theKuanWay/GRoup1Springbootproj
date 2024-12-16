@@ -20,11 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
-
-
 @RestController
-@RequestMapping
+@RequestMapping("/users")
 public class HDBUserController {
 
   private HDBUserServiceImpl hdbUserService;
@@ -48,18 +45,17 @@ public class HDBUserController {
     ArrayList<HDBUser> allCustomers = hdbUserService.getAllHdbUsers();
     return new ResponseEntity<>(allCustomers, HttpStatus.OK);
   }
-    
+
   @PutMapping("/{id}")
   public ResponseEntity<HDBUser> updateHdbUser(@PathVariable Long id, @RequestBody HDBUser hdbUser) {
     HDBUser updatedCustomer = hdbUserService.updateHdbUser(id, hdbUser);
     return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
   }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable Long id) {
-      hdbUserService.deleteHdbUser(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
+  @DeleteMapping("/{id}")
+  public ResponseEntity<HttpStatus> deleteCustomer(@PathVariable Long id) {
+    hdbUserService.deleteHdbUser(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 
 }
