@@ -12,24 +12,57 @@ import sg.edu.ntu.ftbsolutionscrm.entity.Favourite;
 import sg.edu.ntu.ftbsolutionscrm.entity.HDBUser;
 import sg.edu.ntu.ftbsolutionscrm.entity.ResaleHdb;
 import sg.edu.ntu.ftbsolutionscrm.entity.Salesperson;
+import sg.edu.ntu.ftbsolutionscrm.entity.SalesHDBInteraction;
+
 import sg.edu.ntu.ftbsolutionscrm.repository.FavouriteRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.HDBUserRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.ResaleHDBRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.SalespersonRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.SalesHDBInteractionRepository;
+
+
+import sg.edu.ntu.ftbsolutionscrm.exception.*;
+
 
 @Component
-public class DataLoader {
-        @Autowired
-        private ResaleHDBRepository resaleHdbRepository;
+public class DataLoader 
+{
+    @Autowired
+    private ResaleHDBRepository resaleHdbRepository;
 
 
-        @Autowired
-        private FavouriteRepository favouriteRepository;
+    @Autowired
+    private FavouriteRepository favouriteRepository;
 
     @Autowired
     private SalespersonRepository salespersonRepository;
 
    
+    @Autowired
+    private SalesHDBInteractionRepository salesHDBInteractionRepository;     
+
+    @Autowired
+    private HDBUserRepository hdbUserRepository;
+
+
+
+
+    @PostConstruct
+    public void loadData() {
+            // Clear existing data for demonstration purposes
+            resaleHdbRepository.deleteAll();
+            favouriteRepository.deleteAll();
+            hdbUserRepository.deleteAll();
+            resaleHdbRepository.deleteAll();
+            salespersonRepository.deleteAll();
+            salesHDBInteractionRepository.deleteAll();
+
+            loadResaleHdb();
+            loadFavourite();
+            loadHDBUser();
+            loadSalesPerson();
+
+    }
 
     public void loadSalesPerson()
     {
@@ -41,24 +74,48 @@ public class DataLoader {
     }
 
 
-        @Autowired
-        private HDBUserRepository hdbUserRepository;
+    public void loadHDBUser() 
+    {
+        hdbUserRepository.save(HDBUser.builder().
+        firstName("Ramdan").
+        lastName("Maskov").
+        email("MaskozRamdan@gmail.com").
+        isMarriedBoolean(true).
+        contactNo("98765432").
+        yearofbirth(2017).
+        closetoschool(true).
+        closetomall(false).
+        closetotransportation(true).
+        closetoroadways(false).
+        build());
 
-        @PostConstruct
-        public void loadData() {
-                // Clear existing data for demonstration purposes
-                resaleHdbRepository.deleteAll();
-                favouriteRepository.deleteAll();
-                hdbUserRepository.deleteAll();
-                resaleHdbRepository.deleteAll();
-                salespersonRepository.deleteAll();
+    }
 
-                loadResaleHdb();
-                loadFavourite();
-                loadHDBUser();
-                loadSalesPerson();
 
-        }
+
+    public void loadSalesHDBInteraction()
+    {
+     
+    
+        Salesperson salesperson = salespersonRepository.findById(1L)
+            .orElseThrow(() -> new SalesPersonNotFoundException(1L));
+        HDBUser hdbUserId = hdbUserRepository.findById(1L)
+            .orElseThrow(() -> new HDBUserNotFoundException(1L));
+    
+        salesHDBInteractionRepository.save(SalesHDBInteraction.builder()
+            .salesperson(salesperson)
+            .hdbUser(hdbUserId)
+            .review("Very professional")
+            .build());
+    }
+
+
+   
+   // public void loadFavourite() {
+
+        
+
+      
 
         public void loadFavourite() {
                 // Fetch HDB Users and Resale HDB properties
@@ -92,22 +149,7 @@ public class DataLoader {
         // }
 
 
-        public void loadHDBUser() 
-    {
-        hdbUserRepository.save(HDBUser.builder().
-        firstName("Ramdan").
-        lastName("Maskov").
-        email("MaskozRamdan@gmail.com").
-        isMarriedBoolean(true).
-        contactNo("98765432").
-        yearofbirth(2017).
-        closetoschool(true).
-        closetomall(false).
-        closetotransportation(true).
-        closetoroadways(false).
-        build());
-
-    }
+    
 
 
         public void loadResaleHdb() {

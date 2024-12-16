@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import sg.edu.ntu.ftbsolutionscrm.service.SalesHDBInteractionService;
+import sg.edu.ntu.ftbsolutionscrm.DataTransferObject.SalesHDBInteractionDTO;
 import sg.edu.ntu.ftbsolutionscrm.entity.SalesHDBInteraction;
 import sg.edu.ntu.ftbsolutionscrm.repository.SalesHDBInteractionRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.SalespersonRepository;
@@ -18,26 +19,27 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 
 @RestController
-@RequestMapping
-public class HDBSalesInteractionController 
+@RequestMapping("/hdbsalesinteractions")
+public class SalesHDBInteractionController 
 {
     private  SalesHDBInteractionService salesHDBInteractionService;
 
-    public HDBSalesInteractionController(SalesHDBInteractionService salesHDBInteractionService )
+    public SalesHDBInteractionController(SalesHDBInteractionService salesHDBInteractionService )
     {
         this.salesHDBInteractionService = salesHDBInteractionService;
     }
     //create
-    @PostMapping("")
-    public ResponseEntity<SalesHDBInteraction> saveSalesHDBInteraction(@Valid @RequestBody SalesHDBInteraction salesHDBInteraction) 
+    @PostMapping("")                           
+    public ResponseEntity<SalesHDBInteractionDTO> saveSalesHDBInteraction(@Valid @RequestBody SalesHDBInteractionDTO salesHDBInteractionDTO) 
     {
-        SalesHDBInteraction newSalesHDBInteraction = salesHDBInteractionService.saveSalesHDBInteraction(salesHDBInteraction);
+        SalesHDBInteractionDTO newSalesHDBInteraction = salesHDBInteractionService.saveSalesHDBInteraction(salesHDBInteractionDTO);
         return new ResponseEntity<>(newSalesHDBInteraction, HttpStatus.CREATED);
 
     }
@@ -53,11 +55,23 @@ public class HDBSalesInteractionController
 
     //read one particular 
     @GetMapping("/{id}")
-    public ResponseEntity<SalesHDBInteraction> getSalesHDBInteraction(@PathVariable Long id) { 
+    public ResponseEntity<SalesHDBInteractionDTO> getSalesHDBInteraction(@PathVariable Long id) { 
         return new ResponseEntity<>(salesHDBInteractionService.getSalesHDBInteraction(id), HttpStatus.OK);
 
     }
     
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SalesHDBInteraction> updateSalesHDBInteraction(
+            @PathVariable Long id,
+            @Valid @RequestBody SalesHDBInteractionDTO salesHDBInteractionDTO) {
+
+        SalesHDBInteraction updatedInteraction = salesHDBInteractionService.updateSalesHDBInteraction(id, salesHDBInteractionDTO);
+        return ResponseEntity.ok(updatedInteraction);
+    }
+
+
+
 
 
     // Delete

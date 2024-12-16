@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+
+import sg.edu.ntu.ftbsolutionscrm.entity.Salesperson;
+//import sg.edu.ntu.ftbsolutionscrm.entity.HDBUser;
 
 // Activity
 // 1: Create Interaction Entity
@@ -33,7 +38,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "SalesHdbInteraction")
+@Table(name = "saleshdbinteraction")
 
 public class SalesHDBInteraction {
     @Id
@@ -41,19 +46,18 @@ public class SalesHDBInteraction {
     @Column(name = "SalesInteractionID")
     private Long SalesInteractionID;
 
-
-   
-
-    @JsonIgnoreProperties("Salesperson")
+    //@JsonIgnoreProperties("Salesperson")
     @ManyToOne(optional = false)
+    @NotNull(message="SalespersonID is required")
     @JoinColumn(name = "salesperson_id", referencedColumnName = "salesperson_id")
     private Salesperson salesperson;
 
          
-    @JsonIgnoreProperties("HDBUser")
-    @OneToOne(optional = false)
-    @JoinColumn(name = "hdb_userID", referencedColumnName = "hdb_userID")
-    private HDBUser hdbUserId;
+   // @JsonIgnoreProperties("HDBUser")
+    @ManyToOne(optional = false)
+    @NotNull(message="HDB User ID is required")
+    @JoinColumn(name = "hdb_userID", referencedColumnName = "id")
+    private HDBUser hdbUser;
 
     @Column(name = "review")
     @Size(min = 3,  message = "Remarks must be more than 3 characters")

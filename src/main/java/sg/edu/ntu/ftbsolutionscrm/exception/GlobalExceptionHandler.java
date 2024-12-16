@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({FavouriteNotFoundException.class,SalesPersonNotFoundException.class,HDBSalesInteractionNotFoundException.class})
+    @ExceptionHandler({FavouriteNotFoundException.class,SalesPersonNotFoundException.class,HDBSalesInteractionNotFoundException.class,HDBSalesInteractionNotFoundException.class})
     public ResponseEntity<ErrorResponse> handleResourseNotFoundException(RuntimeException e){
         ErrorResponse errorResponse = new ErrorResponse (e.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);

@@ -61,10 +61,10 @@ public class Salesperson
   @Column(name = "yearsinservice")
   private int yearsInService;  
 
-  @JsonIgnoreProperties("salesperson")
 
   // One salesperson can have many sales interactions
   @OneToMany(mappedBy = "salesperson", cascade = CascadeType.ALL)
+  @JsonIgnoreProperties("salesperson") // To prevent cyclic JSON serialization
   private List<SalesHDBInteraction> salesHDBInteraction;
 
 
