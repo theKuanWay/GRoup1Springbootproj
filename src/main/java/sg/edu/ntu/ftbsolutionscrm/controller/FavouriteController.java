@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 // import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/favourites")
 public class FavouriteController {
@@ -26,13 +25,23 @@ public class FavouriteController {
     @Autowired
     private FavouriteService favouriteService;
 
+    @GetMapping("")
+    public ResponseEntity<List<Favourite>> getAllFavouriteDTOs() {
+        try {
+            List<Favourite> favourites = favouriteService.getAllFavouriteDTOs();
+            return ResponseEntity.ok(favourites);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
     // Add a favourite
     @PostMapping("/{userId}/{flatId}")
     public ResponseEntity<String> addFavourite(@PathVariable Long userId, @PathVariable Long flatId) {
         favouriteService.addFavourite(userId, flatId);
         return new ResponseEntity<>("Favourite added successfully!", HttpStatus.CREATED); // HTTP 201
     }
-    
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<FavouriteDTO>> getAllFavourites(@PathVariable Long userId) {
         try {
@@ -42,7 +51,6 @@ public class FavouriteController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-        
 
     @DeleteMapping("/{favouriteId}")
     public ResponseEntity<String> deleteFavourite(@PathVariable Long favouriteId) {
@@ -54,4 +62,3 @@ public class FavouriteController {
         }
     }
 }
-

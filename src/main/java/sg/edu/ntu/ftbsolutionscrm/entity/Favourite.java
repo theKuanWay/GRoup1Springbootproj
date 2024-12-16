@@ -3,6 +3,7 @@ package sg.edu.ntu.ftbsolutionscrm.entity;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.persistence.Column;
@@ -30,19 +31,19 @@ public class Favourite {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
+    // @JsonIgnoreProperties("favourites")
     private HDBUser user;
 
     @ManyToOne
     @JoinColumn(name = "flat_id", nullable = false)
-    @JsonIgnore
+    @JsonIgnoreProperties("favourites")
     private ResaleHdb flat;
 
-      @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Transient
-    public ResaleHdb getFlatDetails() {
-        return this.flat;
-    }
+    // @JsonInclude(JsonInclude.Include.NON_NULL)
+    // @Transient
+    // public ResaleHdb getFlatDetails() {
+    // return this.flat;
+    // }
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -56,7 +57,8 @@ public class Favourite {
     public void setId(Long id) {
         this.id = id;
     }
-    public ResaleHdb getFlat (){
+
+    public ResaleHdb getFlat() {
         return flat;
     }
 
@@ -72,11 +74,11 @@ public class Favourite {
         this.user = user;
     }
 
-public LocalDateTime getCreatedAt(){
-    return createdAt;
-}
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
-    public void setCreatedAt(LocalDateTime createdAt){
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
