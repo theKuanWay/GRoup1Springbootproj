@@ -2,11 +2,7 @@ package sg.edu.ntu.ftbsolutionscrm.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 import java.util.List;
-
-
-
 
 import jakarta.persistence.CascadeType;
 
@@ -28,8 +24,6 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-
 
 @Builder
 @NoArgsConstructor
@@ -54,7 +48,7 @@ public class HDBUser {
     @Email(message = "Email should be valid")
     private String email;
     @Column(name = "marital_status")
-    @NotBlank(message = "Please state your marital status")
+    @NotNull
     private Boolean isMarriedBoolean;
     @Column(name = "contact_no")
     @Size(min = 8, max = 8)
@@ -73,8 +67,6 @@ public class HDBUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({ "user", "flat" })
     private Set<Favourite> favourites;
-
-
 
     public Long getId() {
         return id;
@@ -160,11 +152,9 @@ public class HDBUser {
         return closetoroadways;
     }
 
-
     public void setClose_to_roadways(Boolean closetoroadways) {
         this.closetoroadways = closetoroadways;
 
     }
-
 
 }
