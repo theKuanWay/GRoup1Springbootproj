@@ -6,3 +6,4 @@ public class HDBUserNotFoundException extends RuntimeException {
     }
   
   }
+

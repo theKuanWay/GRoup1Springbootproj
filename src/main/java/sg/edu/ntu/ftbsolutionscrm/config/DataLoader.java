@@ -11,11 +11,19 @@ import jakarta.annotation.PostConstruct;
 import sg.edu.ntu.ftbsolutionscrm.entity.Favourite;
 import sg.edu.ntu.ftbsolutionscrm.entity.HDBUser;
 import sg.edu.ntu.ftbsolutionscrm.entity.ResaleHdb;
+import sg.edu.ntu.ftbsolutionscrm.entity.Salesperson;
+import sg.edu.ntu.ftbsolutionscrm.entity.SalesHDBInteraction;
+
 import sg.edu.ntu.ftbsolutionscrm.repository.FavouriteRepository;
-import sg.edu.ntu.ftbsolutionscrm.repository.HdbUserRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.HDBUserRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.ResaleHDBRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.SalespersonRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.SalesHDBInteractionRepository;
+
+import sg.edu.ntu.ftbsolutionscrm.exception.*;
 
 @Component
+
 public class DataLoader {
     @Autowired
     private ResaleHDBRepository resaleHdbRepository;
@@ -24,7 +32,13 @@ public class DataLoader {
     private FavouriteRepository favouriteRepository;
 
     @Autowired
-    private HdbUserRepository hdbUserRepository;
+    private SalespersonRepository salespersonRepository;
+
+    @Autowired
+    private SalesHDBInteractionRepository salesHDBInteractionRepository;
+
+    @Autowired
+    private HDBUserRepository hdbUserRepository;
 
     @PostConstruct
     public void loadData() {
@@ -32,10 +46,52 @@ public class DataLoader {
         resaleHdbRepository.deleteAll();
         favouriteRepository.deleteAll();
         hdbUserRepository.deleteAll();
+        resaleHdbRepository.deleteAll();
+        salespersonRepository.deleteAll();
+        salesHDBInteractionRepository.deleteAll();
+
         loadResaleHdb();
         loadHDBUser();
         loadFavourite();
+        loadSalesPerson();
+
     }
+
+    public void loadSalesPerson() {
+        salespersonRepository.save(Salesperson.builder().firstName("Tony").lastName("Stark").email("tony@gmail.com")
+                .contactNo("12345678").awards("Inspiring Innovator 2023").yearsInService(5).build());
+
+        salespersonRepository
+                .save(Salesperson.builder().firstName("Ahmad").lastName("Jeffri").email("Ajeffri90@gmail.com")
+                        .contactNo("97867523").awards("").yearsInService(2).build());
+    }
+
+    public void loadHDBUser() {
+        hdbUserRepository.save(HDBUser.builder().firstName("Ramdan").lastName("Maskov").email("MaskozRamdan@gmail.com")
+                .isMarriedBoolean(true).contactNo("98765432").yearofbirth(2017).closetoschool(true).closetomall(false)
+                .closetotransportation(true).closetoroadways(false).build());
+
+        hdbUserRepository.save(HDBUser.builder().firstName("Dimitri").lastName("Ma").email("dmaluuu@gmail.com")
+                .isMarriedBoolean(false).contactNo("19387467").yearofbirth(2017).closetoschool(true).closetomall(false)
+                .closetotransportation(false).closetoroadways(false).build());
+
+    }
+
+    public void loadSalesHDBInteraction() {
+
+        Salesperson salesperson = salespersonRepository.findById(1L)
+                .orElseThrow(() -> new SalesPersonNotFoundException(1L));
+        HDBUser hdbUserId = hdbUserRepository.findById(1L)
+                .orElseThrow(() -> new HDBUserNotFoundException(1L));
+
+        salesHDBInteractionRepository.save(SalesHDBInteraction.builder()
+                .salesperson(salesperson)
+                .hdbUser(hdbUserId)
+                .review("Very professional")
+                .build());
+    }
+
+    // public void loadFavourite() {
 
     public void loadFavourite() {
         // Fetch HDB Users and Resale HDB properties
@@ -57,16 +113,16 @@ public class DataLoader {
         }
     }
 
-    public void loadHDBUser() {
-        List<HDBUser> users = List.of(
-                new HDBUser("John", "Tan", "john-tan@email.com", true),
-                new HDBUser("Tom", "Tanny", "Tom-tanny@email.com", true)
+    // public void loadHDBUser() {
+    // List<HDBUser> users = List.of(
+    // new HDBUser("John", "Tan","john-tan@email.com", true),
+    // new HDBUser("Tom","Tanny", "Tom-tanny@email.com",true)
 
-        );
+    // );
 
-        hdbUserRepository.saveAll(users);
+    // hdbUserRepository.saveAll(users);
 
-    }
+    // }
 
     public void loadResaleHdb() {
         List<ResaleHdb> properties = List.of(
@@ -201,6 +257,6 @@ public class DataLoader {
         for (ResaleHdb resaleHdb : properties) {
             resaleHdbRepository.save(resaleHdb);
         }
-    }
 
+    }
 }
