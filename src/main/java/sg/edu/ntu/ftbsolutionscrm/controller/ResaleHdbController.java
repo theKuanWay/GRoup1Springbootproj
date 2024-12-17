@@ -5,13 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 import sg.edu.ntu.ftbsolutionscrm.entity.ResaleHdb;
 import sg.edu.ntu.ftbsolutionscrm.service.ResaleHDBService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/resale-hdb")
@@ -28,28 +28,24 @@ public class ResaleHdbController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ResaleHdb>> getResaleHDBById(@PathVariable Long id) {
+    public ResponseEntity<ResaleHdb> getResaleHDBById(@PathVariable Long id) {
         return new ResponseEntity<>(resaleHDBService.getResaleHDBById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ResaleHdb> createResaleHDB(@RequestBody ResaleHdb resaleHDB) {
-        return new ResponseEntity<>(resaleHDBService.saveResaleHDB(resaleHDB), HttpStatus.CREATED);
+    public ResponseEntity<ResaleHdb> createResaleHDB(@Valid @RequestBody ResaleHdb resaleHDB) {
+        return new ResponseEntity<>(resaleHDBService.createResaleHDB(resaleHDB), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResaleHdb> updateResaleHDB(@PathVariable Long id, @RequestBody ResaleHdb resaleHDBDetails) {
+    public ResponseEntity<ResaleHdb> updateResaleHDB(@PathVariable Long id,
+            @Valid @RequestBody ResaleHdb resaleHDBDetails) {
         ResaleHdb updatedResaleHDB = resaleHDBService.updatResaleHDB(id, resaleHDBDetails);
         return new ResponseEntity<>(updatedResaleHDB, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteResaleHDB(@PathVariable Long id) {
-        if (resaleHDBService.getResaleHDBById(id).isPresent()) {
-            resaleHDBService.deleteResaleHDB(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public void deleteResaleHDB(@PathVariable Long id) {
+        resaleHDBService.deleteResaleHDB(id);
     }
 }

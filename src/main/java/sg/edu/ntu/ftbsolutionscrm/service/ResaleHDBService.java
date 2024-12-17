@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import sg.edu.ntu.ftbsolutionscrm.entity.ResaleHdb;
+import sg.edu.ntu.ftbsolutionscrm.exception.HDBUserNotFoundException;
+import sg.edu.ntu.ftbsolutionscrm.exception.ResaleHdbNotFoundException;
 import sg.edu.ntu.ftbsolutionscrm.repository.ResaleHDBRepository;
 
 import java.util.List;
@@ -19,8 +21,8 @@ public class ResaleHDBService {
         return resaleHDBRepository.findAll();
     }
 
-    public Optional<ResaleHdb> getResaleHDBById(Long id) {
-        return resaleHDBRepository.findById(id);
+    public ResaleHdb getResaleHDBById(Long id) {
+        return resaleHDBRepository.findById(id).orElseThrow(() -> new ResaleHdbNotFoundException(id));
     }
 
     public ResaleHdb updatResaleHDB(Long id, ResaleHdb resaleHDB) {
@@ -40,7 +42,7 @@ public class ResaleHDBService {
         return resaleHDBRepository.save(resaleHDBToUpdate);
     }
 
-    public ResaleHdb saveResaleHDB(ResaleHdb resaleHDB) {
+    public ResaleHdb createResaleHDB(ResaleHdb resaleHDB) {
         return resaleHDBRepository.save(resaleHDB);
     }
 

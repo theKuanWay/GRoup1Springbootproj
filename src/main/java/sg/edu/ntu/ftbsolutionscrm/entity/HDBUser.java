@@ -2,7 +2,12 @@ package sg.edu.ntu.ftbsolutionscrm.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 import java.util.List;
+
+
+
+
 import jakarta.persistence.CascadeType;
 
 import java.util.Set;
@@ -40,19 +45,19 @@ public class HDBUser {
     @Column(name = "id")
     private Long id;
     @Column(name = "first_name")
-    // @NotBlank(message = "First name required")
+    @NotBlank(message = "First name required")
     private String firstName;
     @Column(name = "last_name")
-    // @NotBlank(message = "Last name required")
+    @NotBlank(message = "Last name required")
     private String lastName;
     @Column(name = "email")
-    // @Email(message = "Email should be valid")
+    @Email(message = "Email should be valid")
     private String email;
     @Column(name = "marital_status")
-    // @NotBlank(message = "Please state your marital status")
+    @NotBlank(message = "Please state your marital status")
     private Boolean isMarriedBoolean;
     @Column(name = "contact_no")
-    // @Size(min = 8, max = 8)
+    @Size(min = 8, max = 8)
     private String contactNo;
     @Column(name = "year_of_birth")
     private int yearofbirth;
@@ -66,17 +71,9 @@ public class HDBUser {
     private Boolean closetoroadways;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties({ "user", "flat" })
     private Set<Favourite> favourites;
 
-    // public HDBUser(){
-
-    // }
-
-    // public HDBUser(String firstname, String lastName, String email, Boolean isMarriedBoolean){
-    //     this.firstName = firstname;
-    //     this.lastName = lastName;
-    //     this.email = email;
-    // }
 
 
     public Long getId() {
@@ -163,11 +160,11 @@ public class HDBUser {
         return closetoroadways;
     }
 
+
     public void setClose_to_roadways(Boolean closetoroadways) {
         this.closetoroadways = closetoroadways;
+
     }
-    // public HDBUser(String firstName) {
-    //     this.firstName = firstName;
-    // }
+
 
 }

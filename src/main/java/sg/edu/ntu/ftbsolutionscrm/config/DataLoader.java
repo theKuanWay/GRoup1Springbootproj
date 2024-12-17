@@ -25,6 +25,7 @@ import sg.edu.ntu.ftbsolutionscrm.exception.*;
 
 
 @Component
+
 public class DataLoader 
 {
     @Autowired
@@ -285,7 +286,9 @@ public class DataLoader
                 for (ResaleHdb resaleHdb : properties) {
                         resaleHdbRepository.save(resaleHdb);
                 }
+
         }
+    }
 
 
     }
