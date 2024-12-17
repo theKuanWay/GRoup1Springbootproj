@@ -11,7 +11,7 @@ import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 import sg.edu.ntu.ftbsolutionscrm.entity.ResaleHdb;
-import sg.edu.ntu.ftbsolutionscrm.service.ResaleHDBService;
+import sg.edu.ntu.ftbsolutionscrm.service.ResaleHDBServiceImpl;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class ResaleHdbController {
     private static final Logger logger = LoggerFactory.getLogger(ResaleHdbController.class);
 
     @Autowired
-    private ResaleHDBService resaleHDBService;
+    private ResaleHDBServiceImpl resaleHDBService;
 
     @GetMapping("")
     public ResponseEntity<List<ResaleHdb>> getAllResaleHDB() {
