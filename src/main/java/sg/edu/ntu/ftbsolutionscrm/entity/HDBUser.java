@@ -1,10 +1,17 @@
 package sg.edu.ntu.ftbsolutionscrm.entity;
 
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+import java.util.List;
+
+
+
+
 import jakarta.persistence.CascadeType;
+
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,15 +19,24 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+
 @Entity
 @Table(name = "hdb_user")
 public class HDBUser {
@@ -29,44 +45,36 @@ public class HDBUser {
     @Column(name = "id")
     private Long id;
     @Column(name = "first_name")
-    // @NotBlank(message = "First name required")
+    @NotBlank(message = "First name required")
     private String firstName;
     @Column(name = "last_name")
-    // @NotBlank(message = "Last name required")
+    @NotBlank(message = "Last name required")
     private String lastName;
     @Column(name = "email")
-    // @Email(message = "Email should be valid")
+    @Email(message = "Email should be valid")
     private String email;
     @Column(name = "marital_status")
-    // @NotBlank(message = "Please state your marital status")
+    @NotBlank(message = "Please state your marital status")
     private Boolean isMarriedBoolean;
     @Column(name = "contact_no")
-    // @Size(min = 8, max = 8)
+    @Size(min = 8, max = 8)
     private String contactNo;
     @Column(name = "year_of_birth")
-    private int year_of_birth;
+    private int yearofbirth;
     @Column(name = "Close to School")
-    private Boolean close_to_school;
+    private Boolean closetoschool;
     @Column(name = "Close to Mall")
-    private Boolean close_to_mall;
+    private Boolean closetomall;
     @Column(name = "Close to Public Transportation")
-    private Boolean close_to_transportation;
+    private Boolean closetotransportation;
     @Column(name = "Close to Major Roadways")
-    private Boolean close_to_roadways;
+    private Boolean closetoroadways;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({ "user", "flat" })
     private Set<Favourite> favourites;
 
-    public HDBUser() {
 
-    }
-
-    public HDBUser(String firstname, String lastName, String email, Boolean isMarriedBoolean) {
-        this.firstName = firstname;
-        this.lastName = lastName;
-        this.email = email;
-    }
 
     public Long getId() {
         return id;
@@ -117,47 +125,46 @@ public class HDBUser {
     }
 
     public int getYear_of_birth() {
-        return year_of_birth;
+        return yearofbirth;
     }
 
     public void setYear_of_birth(int year_of_birth) {
-        this.year_of_birth = year_of_birth;
+        this.yearofbirth = year_of_birth;
     }
 
     public Boolean getClose_to_school() {
-        return close_to_school;
+        return closetoschool;
     }
 
     public void setClose_to_school(Boolean close_to_school) {
-        this.close_to_school = close_to_school;
+        this.closetoschool = close_to_school;
     }
 
     public Boolean getClose_to_mall() {
-        return close_to_mall;
+        return closetomall;
     }
 
     public void setClose_to_mall(Boolean close_to_mall) {
-        this.close_to_mall = close_to_mall;
+        this.closetomall = close_to_mall;
     }
 
     public Boolean getClose_to_transportation() {
-        return close_to_transportation;
+        return closetotransportation;
     }
 
     public void setClose_to_transportation(Boolean close_to_transportation) {
-        this.close_to_transportation = close_to_transportation;
+        this.closetotransportation = close_to_transportation;
     }
 
     public Boolean getClose_to_roadways() {
-        return close_to_roadways;
+        return closetoroadways;
     }
 
-    public void setClose_to_roadways(Boolean close_to_roadways) {
-        this.close_to_roadways = close_to_roadways;
+
+    public void setClose_to_roadways(Boolean closetoroadways) {
+        this.closetoroadways = closetoroadways;
+
     }
 
-    public HDBUser(String firstName) {
-        this.firstName = firstName;
-    }
 
 }

@@ -12,3 +12,4 @@ public interface HDBUserRepository extends JpaRepository<HDBUser, Long> {
 
   
 }
+
