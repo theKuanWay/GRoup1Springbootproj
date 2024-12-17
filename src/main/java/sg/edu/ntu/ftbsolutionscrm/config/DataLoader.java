@@ -258,5 +258,4 @@ public class DataLoader {
             resaleHdbRepository.save(resaleHdb);
         }
 
-    }
 }
