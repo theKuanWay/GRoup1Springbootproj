@@ -15,7 +15,7 @@ import sg.edu.ntu.ftbsolutionscrm.entity.Salesperson;
 import sg.edu.ntu.ftbsolutionscrm.entity.SalesHDBInteraction;
 
 import sg.edu.ntu.ftbsolutionscrm.repository.FavouriteRepository;
-import sg.edu.ntu.ftbsolutionscrm.repository.HDBUserRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.HdbUserRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.ResaleHDBRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.SalespersonRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.SalesHDBInteractionRepository;
@@ -39,7 +39,7 @@ public class DataLoader
     private SalesHDBInteractionRepository salesHDBInteractionRepository;
 
     @Autowired
-    private HDBUserRepository hdbUserRepository;
+    private HdbUserRepository hdbUserRepository;
 
     @PostConstruct
     public void loadData() {

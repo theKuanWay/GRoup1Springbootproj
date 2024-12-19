@@ -15,7 +15,7 @@ import sg.edu.ntu.ftbsolutionscrm.exception.SalesPersonNotFoundException;
 //import repository
 import sg.edu.ntu.ftbsolutionscrm.repository.SalesHDBInteractionRepository;
 import sg.edu.ntu.ftbsolutionscrm.repository.SalespersonRepository;
-import sg.edu.ntu.ftbsolutionscrm.repository.HDBUserRepository;
+import sg.edu.ntu.ftbsolutionscrm.repository.HdbUserRepository;
 
 //import DTO
 import sg.edu.ntu.ftbsolutionscrm.DataTransferObject.SalesHDBInteractionDTO;
@@ -25,11 +25,11 @@ public class SalesHDBInteractionServiceImpl implements SalesHDBInteractionServic
 
     private SalesHDBInteractionRepository salesHDBInteractionRepository;
     private SalespersonRepository salespersonRepository;
-    private HDBUserRepository hdbUserRepository;
+    private HdbUserRepository hdbUserRepository;
 
     public SalesHDBInteractionServiceImpl(SalesHDBInteractionRepository salesHDBInteractionRepository,
             SalespersonRepository salespersonRepository,
-            HDBUserRepository hdbUserRepository) {
+            HdbUserRepository hdbUserRepository) {
         this.salesHDBInteractionRepository = salesHDBInteractionRepository;
         this.salespersonRepository = salespersonRepository;
         this.hdbUserRepository = hdbUserRepository;
