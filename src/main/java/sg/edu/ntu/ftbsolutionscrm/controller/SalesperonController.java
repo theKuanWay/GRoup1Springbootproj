@@ -5,7 +5,8 @@ import sg.edu.ntu.ftbsolutionscrm.entity.Salesperson;
 import sg.edu.ntu.ftbsolutionscrm.service.SalesPersonService;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class SalesperonController
 
 private SalesPersonService salesPersonService;
 
+private static final Logger logger = LoggerFactory.getLogger(SalesperonController.class);
 
 
     public SalesperonController(SalesPersonService salesPersonService)
@@ -42,17 +44,20 @@ private SalesPersonService salesPersonService;
     public ResponseEntity<Salesperson> createSalePerson(@Valid @RequestBody Salesperson salesperson) 
     {
      Salesperson newNewSalesPerson = salesPersonService.createSalePerson(salesperson);
+     logger.error("Salesperson data ID not found");
      return new ResponseEntity<>(newNewSalesPerson,HttpStatus.CREATED);
     }
 //read one salesperson
 @GetMapping("/{id}")
   public ResponseEntity<Salesperson> getSalesPerson(@PathVariable Long id) {
+    logger.info("Salesperson data record"+id +" is being read.");
     return new ResponseEntity<>(salesPersonService.getSalesPerson(id), HttpStatus.OK);
   }
 
   //get all Salespersons
   @GetMapping("")
   public ResponseEntity<List<Salesperson>> getAllSalesPerson() {
+    logger.info("Retrieving all Salesperson data records");
     return new ResponseEntity<>(salesPersonService.getAllSalesPerson(), HttpStatus.OK);
   }
 
@@ -60,6 +65,7 @@ private SalesPersonService salesPersonService;
   @PutMapping("/{id}")
   public ResponseEntity<Salesperson> updateSalesPerson(@PathVariable Long id, @RequestBody Salesperson salesperson) {
     Salesperson updatedSalesperson = salesPersonService.updateSalesPerson(id, salesperson);
+    logger.info("Updating Salesperson data record:"+id);
     return new ResponseEntity<>(updatedSalesperson, HttpStatus.OK);
   }
 
@@ -68,6 +74,7 @@ private SalesPersonService salesPersonService;
   @DeleteMapping("/{id}")
   public ResponseEntity<HttpStatus> deleteSalesPerson(@PathVariable Long id) {
     salesPersonService.deleteSalesPerson(id);
+    logger.info(" Salesperson data record:"+id+ "deleted");
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
@@ -76,6 +83,7 @@ private SalesPersonService salesPersonService;
   @GetMapping("/search")
   public ResponseEntity <List<Salesperson>> searchSalesperson(@RequestParam String firstName) {
     List<Salesperson> foundSalesperson = salesPersonService.getSalespersonbyFirstName(firstName);
+    logger.info(" Searched Salesperson data record by FirstName="+firstName);
     return new ResponseEntity<>(foundSalesperson, HttpStatus.OK);
   }
 

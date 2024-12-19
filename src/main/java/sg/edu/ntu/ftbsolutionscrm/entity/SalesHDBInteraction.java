@@ -46,17 +46,17 @@ public class SalesHDBInteraction {
     @Column(name = "SalesInteractionID")
     private Long SalesInteractionID;
 
-    //@JsonIgnoreProperties("Salesperson")
     @ManyToOne(optional = false)
     @NotNull(message="SalespersonID is required")
     @JoinColumn(name = "salesperson_id", referencedColumnName = "salesperson_id")
+    @JsonIgnoreProperties("salesHDBInteraction")
     private Salesperson salesperson;
 
          
-   // @JsonIgnoreProperties("HDBUser")
     @ManyToOne(optional = false)
     @NotNull(message="HDB User ID is required")
     @JoinColumn(name = "hdb_userID", referencedColumnName = "id")
+    @JsonIgnoreProperties("salesHDBInteraction")
     private HDBUser hdbUser;
 
     @Column(name = "review")

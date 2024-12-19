@@ -23,13 +23,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/hdbsalesinteractions")
 public class SalesHDBInteractionController 
 {
     private  SalesHDBInteractionService salesHDBInteractionService;
+    private static final Logger logger = LoggerFactory.getLogger(SalesHDBInteractionController.class);
+
 
     public SalesHDBInteractionController(SalesHDBInteractionService salesHDBInteractionService )
     {
@@ -40,6 +43,7 @@ public class SalesHDBInteractionController
     public ResponseEntity<SalesHDBInteractionDTO> saveSalesHDBInteraction(@Valid @RequestBody SalesHDBInteractionDTO salesHDBInteractionDTO) 
     {
         SalesHDBInteractionDTO newSalesHDBInteraction = salesHDBInteractionService.saveSalesHDBInteraction(salesHDBInteractionDTO);
+        logger.info("New Sale HDB Interaction is made ");
         return new ResponseEntity<>(newSalesHDBInteraction, HttpStatus.CREATED);
 
     }
@@ -48,7 +52,8 @@ public class SalesHDBInteractionController
     @GetMapping("")
     public ResponseEntity<List<SalesHDBInteraction>> getAllSalesHDBInteractions()
     {
-    return new ResponseEntity<>(salesHDBInteractionService.getAllSalesHDBInteractions(), HttpStatus.OK);
+    logger.info("Retrieving All Sales HDB Transaction data records");
+     return new ResponseEntity<>(salesHDBInteractionService.getAllSalesHDBInteractions(), HttpStatus.OK);
     }
 
 
@@ -56,6 +61,8 @@ public class SalesHDBInteractionController
     //read one particular 
     @GetMapping("/{id}")
     public ResponseEntity<SalesHDBInteractionDTO> getSalesHDBInteraction(@PathVariable Long id) { 
+        logger.info("Retrieving  Sales HDB Transaction data records with id:"+ id);
+
         return new ResponseEntity<>(salesHDBInteractionService.getSalesHDBInteraction(id), HttpStatus.OK);
 
     }
@@ -67,6 +74,9 @@ public class SalesHDBInteractionController
             @Valid @RequestBody SalesHDBInteractionDTO salesHDBInteractionDTO) {
 
         SalesHDBInteraction updatedInteraction = salesHDBInteractionService.updateSalesHDBInteraction(id, salesHDBInteractionDTO);
+        
+        logger.info("Updating Sales HDB Transaction data records with id:"+ id);
+
         return ResponseEntity.ok(updatedInteraction);
     }
 
@@ -78,6 +88,8 @@ public class SalesHDBInteractionController
   @DeleteMapping("/{id}")
   public ResponseEntity<HttpStatus> deleteSalesHDBInteraction(@PathVariable Long id) {
     salesHDBInteractionService.deleteSalesHDBInteraction(id);
+    logger.info("Deleting Sales HDB Transaction data records with id:"+ id);
+
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 

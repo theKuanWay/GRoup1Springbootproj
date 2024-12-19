@@ -14,7 +14,7 @@ public class SalesPersonServiceImpl implements SalesPersonService {
 
     private SalespersonRepository salespersonRepository;
 
-    private SalesPersonServiceImpl(SalespersonRepository salespersonRepository)
+    public SalesPersonServiceImpl(SalespersonRepository salespersonRepository)
     {
         this.salespersonRepository = salespersonRepository;
     }

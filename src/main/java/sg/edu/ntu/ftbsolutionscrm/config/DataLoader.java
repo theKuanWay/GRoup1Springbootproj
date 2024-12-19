@@ -24,7 +24,8 @@ import sg.edu.ntu.ftbsolutionscrm.exception.*;
 
 @Component
 
-public class DataLoader {
+public class DataLoader 
+{
     @Autowired
     private ResaleHDBRepository resaleHdbRepository;
 
@@ -77,7 +78,8 @@ public class DataLoader {
 
     }
 
-    public void loadSalesHDBInteraction() {
+    public void loadSalesHDBInteraction() 
+    {
 
         Salesperson salesperson = salespersonRepository.findById(1L)
                 .orElseThrow(() -> new SalesPersonNotFoundException(1L));
@@ -93,12 +95,14 @@ public class DataLoader {
 
     // public void loadFavourite() {
 
-    public void loadFavourite() {
+    public void loadFavourite() 
+    {
         // Fetch HDB Users and Resale HDB properties
         List<HDBUser> users = hdbUserRepository.findAll();
         List<ResaleHdb> properties = resaleHdbRepository.findAll();
 
-        if (!users.isEmpty() && !properties.isEmpty()) {
+        if (!users.isEmpty() && !properties.isEmpty()) 
+        {
             Favourite favourite1 = new Favourite();
             favourite1.setUser(users.get(0)); // First user
             favourite1.setFlat(properties.get(0));// First property
@@ -124,7 +128,8 @@ public class DataLoader {
 
     // }
 
-    public void loadResaleHdb() {
+    public void loadResaleHdb() 
+    {
         List<ResaleHdb> properties = List.of(
                 new ResaleHdb("2024-01", "Yishun", "3 ROOM", "123", "Yishun Ave 1", "01-10", 70.0,
                         "Model A", 1995,
@@ -254,8 +259,11 @@ public class DataLoader {
                         "01-08", 75.0,
                         "Model A",
                         1994, "Remaining 55 years", 290000));
-        for (ResaleHdb resaleHdb : properties) {
-            resaleHdbRepository.save(resaleHdb);
-        }
+               
+                for (ResaleHdb resaleHdb : properties)
+                {
+                resaleHdbRepository.save(resaleHdb);
+                }
 
+     }
 }

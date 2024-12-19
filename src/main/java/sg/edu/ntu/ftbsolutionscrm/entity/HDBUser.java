@@ -13,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -67,6 +68,11 @@ public class HDBUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({ "user", "flat" })
     private Set<Favourite> favourites;
+     
+
+   @OneToMany(mappedBy = "hdbUser", cascade = CascadeType.ALL)
+   @JsonIgnoreProperties("hdbUser") // To prevent cyclic JSON serialization
+    private List<SalesHDBInteraction> salesHDBInteraction;
 
     public Long getId() {
         return id;
