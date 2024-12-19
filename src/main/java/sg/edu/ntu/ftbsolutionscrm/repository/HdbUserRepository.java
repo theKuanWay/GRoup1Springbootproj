@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import sg.edu.ntu.ftbsolutionscrm.entity.HDBUser;
 
 
-public interface HDBUserRepository extends JpaRepository<HDBUser, Long> {
+public interface HdbUserRepository extends JpaRepository<HDBUser, Long> {
     List<HDBUser > findByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
 
 
