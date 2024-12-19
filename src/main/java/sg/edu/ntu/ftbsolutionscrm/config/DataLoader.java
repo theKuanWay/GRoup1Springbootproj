@@ -259,6 +259,7 @@ public class DataLoader
                         "01-08", 75.0,
                         "Model A",
                         1994, "Remaining 55 years", 290000));
+
                
                 for (ResaleHdb resaleHdb : properties)
                 {
@@ -267,3 +268,5 @@ public class DataLoader
 
      }
 }
+
+       
