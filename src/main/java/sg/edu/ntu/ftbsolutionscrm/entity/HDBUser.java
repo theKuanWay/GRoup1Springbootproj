@@ -13,7 +13,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -49,7 +48,7 @@ public class HDBUser {
     @Email(message = "Email should be valid")
     private String email;
     @Column(name = "marital_status")
-    @NotNull
+    @NotNull(message = "Please select an option")
     private Boolean isMarriedBoolean;
     @Column(name = "contact_no")
     @Size(min = 8, max = 8)
@@ -57,12 +56,16 @@ public class HDBUser {
     @Column(name = "year_of_birth")
     private int yearofbirth;
     @Column(name = "Close to School")
+    @NotNull(message = "Please select an option")
     private Boolean closetoschool;
     @Column(name = "Close to Mall")
+    @NotNull(message = "Please select an option")
     private Boolean closetomall;
     @Column(name = "Close to Public Transportation")
+    @NotNull(message = "Please select an option")
     private Boolean closetotransportation;
     @Column(name = "Close to Major Roadways")
+    @NotNull(message = "Please select an option")
     private Boolean closetoroadways;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
