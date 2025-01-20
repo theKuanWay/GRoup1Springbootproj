@@ -1,0 +1,96 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.1
+  heroku: circleci/heroku@2.0.0
+  docker: circleci/docker@2.1.4
+  snyk: snyk/snyk@1.5.0
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run: |
+          echo "Install dependencies"
+          npm install
+
+  test:
+    docker: 
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run: |
+          echo "Running tests"
+          npm run test
+
+  deploy:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - setup_remote_docker
+      - heroku/install
+      - checkout
+      - run:
+          name: Heroku Container Push
+          command: |
+            heroku container:login
+            heroku stack:set container -a heroku-kw
+            heroku container:push web -a heroku-kw
+            heroku container:release web -a heroku-kw
+
+  scan:
+    docker: 
+      - image: cimg/node:16.10
+    environment:
+      IMAGE_NAME: dockerkw94/education-space
+    steps:
+      - checkout
+      - setup_remote_docker
+      - docker/check
+      - run: docker build -t $IMAGE_NAME .
+      - snyk/scan: 
+          docker-image-name: $IMAGE_NAME
+
+  codescan:
+    docker: 
+      - image: cimg/node:16.10
+    environment:
+      IMAGE_NAME: dockerkw94/education-space
+    steps:
+      - checkout
+      - setup_remote_docker
+      - docker/check
+      - snyk/install
+      - run: |
+          snyk code test
+
+workflows:
+  ci_flow:
+    jobs:
+      - build
+      - test
+
+  cicd_flow:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - scan:
+          requires:
+            - build
+      - codescan:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: release
