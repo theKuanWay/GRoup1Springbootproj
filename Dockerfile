@@ -1,6 +1,18 @@
-FROM openjdk:11
+# Dockerfile
+FROM eclipse-temurin:17-jdk-jammy
+
+# Set working directory
 WORKDIR /app
-COPY . ./
-RUN ./mvnw clean package
-CMD ["java","-jar","target/springbootproj-0.0.1-SNAPSHOT.jar"]
-#env switch
+
+# Copy Maven wrapper and dependencies
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+
+# Copy source code
+COPY src ./src
+
+# Install dependencies and skip tests
+RUN ./mvnw install -DskipTests
+
+# Default command to run the application
+CMD ["./mvnw", "spring-boot:run"]
