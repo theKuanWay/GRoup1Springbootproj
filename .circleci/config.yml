@@ -47,21 +47,30 @@ jobs:
 workflows:
   ci_flow:
     jobs:
-      - build
-      - test
-    filters:
-      branches:
-        only: develop
+      - build:
+          filters:
+            branches:
+              only: develop
+      - test:
+          filters:
+            branches:
+              only: develop
 
   cicd_flow:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only: release
       - test:
           requires:
             - build
+          filters:
+            branches:
+              only: release
       - deploy:
           requires:
             - test
-    filters:
-      branches:
-        only: release
+          filters:
+            branches:
+              only: release
