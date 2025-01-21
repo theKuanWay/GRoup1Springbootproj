@@ -46,13 +46,14 @@ jobs:
 
 workflows:
   ci_flow:
-    when: << pipeline.git.branch == "develop" >>
     jobs:
       - build
       - test
+    filters:
+      branches:
+        only: develop
 
   cicd_flow:
-    when: << pipeline.git.branch == "release" >>
     jobs:
       - build
       - test:
@@ -61,6 +62,6 @@ workflows:
       - deploy:
           requires:
             - test
-          filters:
-            branches:
-              only: release
+    filters:
+      branches:
+        only: release
