@@ -46,11 +46,13 @@ jobs:
 
 workflows:
   ci_flow:
+    when: << pipeline.git.branch == "develop" >>
     jobs:
       - build
       - test
 
   cicd_flow:
+    when: << pipeline.git.branch == "release" >>
     jobs:
       - build
       - test:
