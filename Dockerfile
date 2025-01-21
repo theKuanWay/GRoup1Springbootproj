@@ -16,3 +16,4 @@ RUN ./mvnw install -DskipTests
 
 # Default command to run the application
 CMD ["./mvnw", "spring-boot:run"]
+
