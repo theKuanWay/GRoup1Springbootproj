@@ -20,9 +20,9 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ftb_crm_postgres:5432/defaultdb?ssl=require
-      - SPRING_DATASOURCE_USERNAME=avnadmin
-      - SPRING_DATASOURCE_PASSWORD=AVNS_Cfg1NPhgCygE6h3H26l
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
     depends_on:
       - postgres
     ports:
